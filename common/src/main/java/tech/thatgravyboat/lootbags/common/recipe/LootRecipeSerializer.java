@@ -2,6 +2,7 @@ package tech.thatgravyboat.lootbags.common.recipe;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +30,7 @@ public class LootRecipeSerializer extends SimpleRecipeSerializer<LootRecipe> {
     @Override
     public LootRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buffer) {
         String data = buffer.readUtf();
-        return LootRecipe.codec(id).parse(JsonOps.COMPRESSED, GSON.fromJson(data, JsonObject.class)).result().orElse(null);
+        return LootRecipe.codec(id).parse(JsonOps.COMPRESSED, GSON.fromJson(data, JsonArray.class)).result().orElse(null);
     }
 
     @Override
