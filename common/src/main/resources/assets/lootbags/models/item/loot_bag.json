@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "lootbags:item/common"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "lootbags:type": 0.2
+      },
+      "model": "lootbags:item/uncommon"
+    },
+    {
+      "predicate": {
+        "lootbags:type": 0.3
+      },
+      "model": "lootbags:item/rare"
+    },
+    {
+      "predicate": {
+        "lootbags:type": 0.4
+      },
+      "model": "lootbags:item/epic"
+    },
+    {
+      "predicate": {
+        "lootbags:type": 0.5
+      },
+      "model": "lootbags:item/legendary"
+    }
+  ]
+}

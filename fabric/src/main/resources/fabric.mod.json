@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "lootbags",
+  "version": "${version}",
+
+  "name": "Lootbags",
+  "description": "Loot Bags",
+  "authors": [
+      "ThatGravyBoat"
+  ],
+  "contact": {},
+
+  "license": "All-Rights-Reserved",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+      "main": [
+          "tech.thatgravyboat.lootbags.fabric.LootbagsFabric"
+      ],
+      "client": [
+          "tech.thatgravyboat.lootbags.client.LootbagsClient::init"
+      ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "minecraft": ">=1.19.2"
+  }
+}
