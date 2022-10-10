@@ -1,5 +1,6 @@
 package tech.thatgravyboat.lootbags.common.items;
 
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -21,6 +22,7 @@ public class LootBagItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+
         if (!level.isClientSide && stack.getOrCreateTag().contains("Loot", Tag.TAG_STRING)) {
             String id = stack.getOrCreateTag().getString("Loot");
             level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get())

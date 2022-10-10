@@ -2,7 +2,12 @@ package tech.thatgravyboat.lootbags.common.recipe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.advancements.FrameType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -16,8 +21,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import tech.thatgravyboat.lootbags.api.LootEntry;
 import tech.thatgravyboat.lootbags.api.LootType;
+import tech.thatgravyboat.lootbags.client.LootbagsClient;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 import tech.thatgravyboat.lootbags.common.utils.WeightedCollection;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public record LootRecipe(ResourceLocation id, String name, LootType type, WeightedCollection<LootEntry> loot, int rolls) implements Recipe<Container> {
 
@@ -41,11 +50,19 @@ public record LootRecipe(ResourceLocation id, String name, LootType type, Weight
         return stack;
     }
 
+    public DisplayInfo getDisplayInfo(ItemStack reward) {
+        return new DisplayInfo(reward, new TextComponent(name()), reward.getDisplayName(), null, FrameType.CHALLENGE, true, false, false);
+    }
+
     public void openLootBag(Player player) {
+        List<ItemStack> rewards = new ArrayList<>();
         player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 2.0F, 2.0F);
         for (int i = 0; i < rolls; i++) {
-            loot.next().giveLoot(player);
+            LootEntry next = loot.next();
+            rewards.add(next.stack().copy());
+            next.giveLoot(player);
         }
+        LootbagsClient.showLootToast(this, rewards);
     }
 
     @Override
