@@ -1,5 +1,6 @@
 package tech.thatgravyboat.lootbags;
 
+import tech.thatgravyboat.lootbags.common.network.NetworkHandlers;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
 public class Lootbags {
@@ -7,5 +8,6 @@ public class Lootbags {
 
 	public static void init() {
 		McRegistry.register();
+		NetworkHandlers.register();
 	}
 }

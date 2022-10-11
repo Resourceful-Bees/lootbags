@@ -2,6 +2,7 @@ package tech.thatgravyboat.lootbags.common.items;
 
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -34,6 +35,6 @@ public class LootBagItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        return Component.translatable(stack.getOrCreateTag().getString("Name"));
+        return Component.translatable(stack.getOrCreateTag().getString("Name")).withStyle(Style.EMPTY.withColor(stack.getOrCreateTag().getInt("Color")));
     }
 }

@@ -1,6 +1,7 @@
 package tech.thatgravyboat.lootbags.client;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.nbt.Tag;
@@ -12,7 +13,10 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 import tech.thatgravyboat.lootbags.Lootbags;
 import tech.thatgravyboat.lootbags.api.LootType;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
+
+import java.util.List;
 
 public class LootbagsClient {
 
@@ -28,5 +32,9 @@ public class LootbagsClient {
     @ExpectPlatform
     public static void registerProperty(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
         throw new NotImplementedException("Not implemented yet");
+    }
+
+    public static void showLootToast(Loot recipe, List<ItemStack> rewards) {
+        Minecraft.getInstance().getToasts().addToast(new LootBagToast(recipe, rewards));
     }
 }
