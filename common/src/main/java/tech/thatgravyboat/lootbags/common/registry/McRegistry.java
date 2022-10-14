@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import org.apache.commons.lang3.NotImplementedException;
 import tech.thatgravyboat.lootbags.common.items.LootBagItem;
 import tech.thatgravyboat.lootbags.common.recipe.Loot;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipeSerializer;
 
 import java.util.function.Supplier;
 
