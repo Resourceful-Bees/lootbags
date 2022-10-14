@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import tech.thatgravyboat.lootbags.Lootbags;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipe;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
 import java.util.List;
@@ -24,13 +24,13 @@ public class McRegistryImpl {
     public static CreativeModeTab createTab() {
         return FabricItemGroupBuilder.create(new ResourceLocation(Lootbags.MOD_ID, "itemgroup"))
                 .icon(() -> new ItemStack(McRegistry.LOOT_BAG.get()))
-                .appendItems(list -> getLoot().stream().map(LootRecipe::createLootBag).forEach(list::add))
+                .appendItems(list -> getLoot().stream().map(Loot::createLootBag).forEach(list::add))
                 .build();
 
     }
 
     @Environment(EnvType.CLIENT)
-    private static List<LootRecipe> getLoot() {
+    private static List<Loot> getLoot() {
         var level = Minecraft.getInstance().level;
         if (level == null) {
             return List.of();

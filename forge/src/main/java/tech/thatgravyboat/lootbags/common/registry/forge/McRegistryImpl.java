@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 import tech.thatgravyboat.lootbags.Lootbags;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipe;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
 import java.util.HashMap;
@@ -45,14 +45,14 @@ public class McRegistryImpl {
             @Override
             public void fillItemList(@NotNull NonNullList<ItemStack> list) {
                 getLoot().stream()
-                    .map(LootRecipe::createLootBag)
+                    .map(Loot::createLootBag)
                     .forEach(list::add);
             }
         };
     }
 
     @OnlyIn(Dist.CLIENT)
-    private static List<LootRecipe> getLoot() {
+    private static List<Loot> getLoot() {
         var level = Minecraft.getInstance().level;
         if (level == null) {
             return List.of();

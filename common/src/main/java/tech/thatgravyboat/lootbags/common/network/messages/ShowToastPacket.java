@@ -9,13 +9,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import tech.thatgravyboat.lootbags.Lootbags;
 import tech.thatgravyboat.lootbags.client.LootbagsClient;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipe;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record ShowToastPacket(LootRecipe recipe, List<ItemStack> rewards) implements Packet<ShowToastPacket> {
+public record ShowToastPacket(Loot recipe, List<ItemStack> rewards) implements Packet<ShowToastPacket> {
     public static final ResourceLocation ID = new ResourceLocation(Lootbags.MOD_ID, "show_toast");
     public static final Handler HANDLER = new Handler();
 
@@ -40,7 +40,7 @@ public record ShowToastPacket(LootRecipe recipe, List<ItemStack> rewards) implem
 
         @Override
         public ShowToastPacket decode(FriendlyByteBuf friendlyByteBuf) {
-            LootRecipe recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(friendlyByteBuf.readResourceLocation())).findFirst().orElseThrow();
+            Loot recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(friendlyByteBuf.readResourceLocation())).findFirst().orElseThrow();
             int size = friendlyByteBuf.readVarInt();
             List<ItemStack> rewards = new ArrayList<>();
             for (int i = 0; i < size; i++) {

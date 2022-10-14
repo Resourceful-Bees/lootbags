@@ -2,11 +2,11 @@ package tech.thatgravyboat.lootbags.common.recipe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.teamresourceful.resourcefullib.common.color.Color;
+import com.teamresourceful.resourcefullib.common.color.ConstantColors;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -22,22 +22,25 @@ import org.jetbrains.annotations.NotNull;
 import tech.thatgravyboat.lootbags.api.LootEntry;
 import tech.thatgravyboat.lootbags.api.LootType;
 import tech.thatgravyboat.lootbags.client.LootbagsClient;
+import tech.thatgravyboat.lootbags.common.network.NetworkHandlers;
+import tech.thatgravyboat.lootbags.common.network.messages.ShowToastPacket;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 import tech.thatgravyboat.lootbags.common.utils.WeightedCollection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public record LootRecipe(ResourceLocation id, String name, LootType type, WeightedCollection<LootEntry> loot, int rolls) implements Recipe<Container> {
+public record Loot(ResourceLocation id, String name, Color color, LootType type, WeightedCollection<LootEntry> loot, int rolls) implements Recipe<Container> {
 
-    public static Codec<LootRecipe> codec(ResourceLocation id) {
+    public static Codec<Loot> codec(ResourceLocation id) {
         return RecordCodecBuilder.create(instance -> instance.group(
                 RecordCodecBuilder.point(id),
-                Codec.STRING.fieldOf("name").forGetter(LootRecipe::name),
-                LootType.CODEC.fieldOf("rarity").orElse(LootType.COMMON).forGetter(LootRecipe::type),
-                WeightedCollection.codec(LootEntry.CODEC, LootEntry::weight).fieldOf("loot").forGetter(LootRecipe::loot),
-                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("rolls").orElse(1).forGetter(LootRecipe::rolls)
-        ).apply(instance, LootRecipe::new));
+                Codec.STRING.fieldOf("name").forGetter(Loot::name),
+                Color.CODEC.fieldOf("color").orElse(ConstantColors.lightgray).forGetter(Loot::color),
+                LootType.CODEC.fieldOf("rarity").orElse(LootType.COMMON).forGetter(Loot::type),
+                WeightedCollection.codec(LootEntry.CODEC, LootEntry::weight).fieldOf("loot").forGetter(Loot::loot),
+                Codec.intRange(1, Integer.MAX_VALUE).fieldOf("rolls").orElse(1).forGetter(Loot::rolls)
+        ).apply(instance, Loot::new));
     }
 
     public ItemStack createLootBag() {
@@ -46,6 +49,7 @@ public record LootRecipe(ResourceLocation id, String name, LootType type, Weight
         tag.putString("Loot", id().toString());
         tag.putString("Type", type().toString());
         tag.putString("Name", name());
+        tag.putInt("Color", color().getValue());
         stack.setTag(tag);
         return stack;
     }
@@ -59,10 +63,20 @@ public record LootRecipe(ResourceLocation id, String name, LootType type, Weight
         player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 2.0F, 2.0F);
         for (int i = 0; i < rolls; i++) {
             LootEntry next = loot.next();
-            rewards.add(next.stack().copy());
+            mergeItemStacks(rewards, next.stack().copy());
             next.giveLoot(player);
         }
-        LootbagsClient.showLootToast(this, rewards);
+        NetworkHandlers.CHANNEL.sendToPlayer(new ShowToastPacket(this, rewards), player);
+    }
+
+    private static void mergeItemStacks(List<ItemStack> items, ItemStack stack) {
+        for (ItemStack item : items) {
+            if (ItemStack.isSameItemSameTags(item, stack)) {
+                item.grow(stack.getCount());
+                return;
+            }
+        }
+        items.add(stack);
     }
 
     @Override

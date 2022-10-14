@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class LootRecipeSerializer extends SimpleRecipeSerializer<LootRecipe> {
+public class LootRecipeSerializer extends SimpleRecipeSerializer<Loot> {
 
     private static final Gson GSON = new Gson();
 
@@ -20,22 +20,22 @@ public class LootRecipeSerializer extends SimpleRecipeSerializer<LootRecipe> {
     }
 
     @Override
-    public @NotNull LootRecipe fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
-        return LootRecipe.codec(id).parse(JsonOps.INSTANCE, json).getOrThrow(false, (t) -> {
+    public @NotNull Loot fromJson(@NotNull ResourceLocation id, @NotNull JsonObject json) {
+        return Loot.codec(id).parse(JsonOps.INSTANCE, json).getOrThrow(false, (t) -> {
             throw new JsonSyntaxException("Failed to parse recipe: " + id);
         });
     }
 
     @Nullable
     @Override
-    public LootRecipe fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buffer) {
+    public Loot fromNetwork(@NotNull ResourceLocation id, @NotNull FriendlyByteBuf buffer) {
         String data = buffer.readUtf();
-        return LootRecipe.codec(id).parse(JsonOps.COMPRESSED, GSON.fromJson(data, JsonArray.class)).result().orElse(null);
+        return Loot.codec(id).parse(JsonOps.COMPRESSED, GSON.fromJson(data, JsonArray.class)).result().orElse(null);
     }
 
     @Override
-    public void toNetwork(@NotNull FriendlyByteBuf buffer, @NotNull LootRecipe recipe) {
-        LootRecipe.codec(recipe.id()).encodeStart(JsonOps.COMPRESSED, recipe).result().map(GSON::toJson).ifPresent(buffer::writeUtf);
+    public void toNetwork(@NotNull FriendlyByteBuf buffer, @NotNull Loot recipe) {
+        Loot.codec(recipe.id()).encodeStart(JsonOps.COMPRESSED, recipe).result().map(GSON::toJson).ifPresent(buffer::writeUtf);
     }
 
 }

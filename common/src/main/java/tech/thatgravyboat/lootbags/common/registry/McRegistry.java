@@ -8,7 +8,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import org.apache.commons.lang3.NotImplementedException;
 import tech.thatgravyboat.lootbags.common.items.LootBagItem;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipe;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.recipe.LootRecipeSerializer;
 
 import java.util.function.Supplier;
@@ -17,13 +17,13 @@ public class McRegistry {
 
     public static final CreativeModeTab TAB = createTab();
     public static final Supplier<Item> LOOT_BAG = register(Registry.ITEM, "loot_bag", () -> new LootBagItem(new Item.Properties().tab(TAB)));
-    public static final Supplier<RecipeType<LootRecipe>> LOOT_RECIPE = register(Registry.RECIPE_TYPE, "loot", () -> new RecipeType<>() {
+    public static final Supplier<RecipeType<Loot>> LOOT_RECIPE = register(Registry.RECIPE_TYPE, "loot", () -> new RecipeType<>() {
         @Override
         public String toString() {
             return "loot";
         }
     });
-    public static final Supplier<RecipeSerializer<LootRecipe>> LOOT_SERIALIZER = register(Registry.RECIPE_SERIALIZER, "loot", LootRecipeSerializer::new);
+    public static final Supplier<RecipeSerializer<Loot>> LOOT_SERIALIZER = register(Registry.RECIPE_SERIALIZER, "loot", LootRecipeSerializer::new);
 
 
     public static void register() {

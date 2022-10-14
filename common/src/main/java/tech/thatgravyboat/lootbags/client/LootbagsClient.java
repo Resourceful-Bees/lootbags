@@ -13,8 +13,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 import tech.thatgravyboat.lootbags.Lootbags;
 import tech.thatgravyboat.lootbags.api.LootType;
-import tech.thatgravyboat.lootbags.client.popup.LootBagToast;
-import tech.thatgravyboat.lootbags.common.recipe.LootRecipe;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
 import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
 import java.util.List;
@@ -35,7 +34,7 @@ public class LootbagsClient {
         throw new NotImplementedException("Not implemented yet");
     }
 
-    public static void showLootToast(LootRecipe recipe, List<ItemStack> rewards) {
+    public static void showLootToast(Loot recipe, List<ItemStack> rewards) {
         Minecraft.getInstance().getToasts().addToast(new LootBagToast(recipe, rewards));
     }
 }
