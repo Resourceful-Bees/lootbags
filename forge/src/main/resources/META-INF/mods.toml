@@ -5,9 +5,9 @@ license="All Rights Reserved"
 [[mods]]
    modId="lootbags"
    version="${version}"
-   displayName="Lootbags"
+   displayName="Resourceful Lootbags"
    logoFile="icon.png"
-   authors="ThatGravyBoat"
+   authors="ThatGravyBoat, CodexAdrian, Art by Kekie6"
    description="Loot Bags"
 
 [[dependencies.lootbags]]

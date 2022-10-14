@@ -2,26 +2,24 @@
   "schemaVersion": 1,
   "id": "lootbags",
   "version": "${version}",
-
-  "name": "Lootbags",
-  "description": "Loot Bags",
+  "name": "Resourceful Lootbags",
+  "description": "Data driven loot bags",
   "authors": [
-      "ThatGravyBoat",
-      "CodexAdrian"
+    "ThatGravyBoat",
+    "CodexAdrian",
+    "Art by Kekie6"
   ],
   "contact": {},
-
   "license": "All-Rights-Reserved",
   "icon": "icon.png",
-
   "environment": "*",
   "entrypoints": {
-      "main": [
-          "tech.thatgravyboat.lootbags.fabric.LootbagsFabric"
-      ],
-      "client": [
-          "tech.thatgravyboat.lootbags.client.LootbagsClient::init"
-      ]
+    "main": [
+      "tech.thatgravyboat.lootbags.fabric.LootbagsFabric"
+    ],
+    "client": [
+      "tech.thatgravyboat.lootbags.client.LootbagsClient::init"
+    ]
   },
   "depends": {
     "fabricloader": ">=0.14.9",
