@@ -1,0 +1,22 @@
+{
+  "type": "lootbags:loot",
+  "name": "Loot List Test",
+  "rarity": "COMMON",
+  "output": {
+    "rolls": 2,
+    "entries": [
+      {
+        "stack": "minecraft:stone",
+        "weight": 1
+      },
+      {
+        "stack": "minecraft:dirt",
+        "weight": 1
+      },
+      {
+        "stack": "minecraft:sponge",
+        "weight": 1
+      }
+    ]
+  }
+}

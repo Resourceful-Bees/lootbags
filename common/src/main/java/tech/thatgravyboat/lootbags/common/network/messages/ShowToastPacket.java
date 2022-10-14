@@ -40,7 +40,8 @@ public record ShowToastPacket(Loot recipe, List<ItemStack> rewards) implements P
 
         @Override
         public ShowToastPacket decode(FriendlyByteBuf friendlyByteBuf) {
-            Loot recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(friendlyByteBuf.readResourceLocation())).findFirst().orElseThrow();
+            ResourceLocation id = friendlyByteBuf.readResourceLocation();
+            Loot recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(id)).findFirst().orElseThrow();
             int size = friendlyByteBuf.readVarInt();
             List<ItemStack> rewards = new ArrayList<>();
             for (int i = 0; i < size; i++) {

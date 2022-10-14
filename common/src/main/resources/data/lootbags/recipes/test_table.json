@@ -1,0 +1,8 @@
+{
+  "type": "lootbags:loot",
+  "name": "Loot Table Test",
+  "rarity": "COMMON",
+  "output": {
+    "table": "minecraft:chests/end_city_treasure"
+  }
+}
