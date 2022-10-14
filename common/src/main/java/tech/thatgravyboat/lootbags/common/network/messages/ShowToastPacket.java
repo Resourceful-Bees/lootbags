@@ -40,7 +40,8 @@ import com.teamresourceful.resourcefullib.common.networking.base.Packet;
 
          @Override
          public ShowToastPacket decode(FriendlyByteBuf friendlyByteBuf) {
-             Loot recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(friendlyByteBuf.readResourceLocation())).findFirst().orElseThrow();
+             ResourceLocation location = friendlyByteBuf.readResourceLocation();
+             Loot recipe = Minecraft.getInstance().level.getRecipeManager().getAllRecipesFor(McRegistry.LOOT_RECIPE.get()).stream().filter(recipe1 -> recipe1.id().equals(location)).findFirst().orElseThrow();
              int size = friendlyByteBuf.readVarInt();
              List<ItemStack> rewards = new ArrayList<>();
              for (int i = 0; i < size; i++) {
