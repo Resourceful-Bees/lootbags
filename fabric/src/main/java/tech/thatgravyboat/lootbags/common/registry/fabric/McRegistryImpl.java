@@ -3,6 +3,7 @@ package tech.thatgravyboat.lootbags.common.registry.fabric;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -24,7 +25,13 @@ public class McRegistryImpl {
     public static CreativeModeTab createTab() {
         return FabricItemGroupBuilder.create(new ResourceLocation(Lootbags.MOD_ID, "itemgroup"))
                 .icon(() -> new ItemStack(McRegistry.LOOT_BAG.get()))
-                .appendItems(list -> getLoot().stream().map(Loot::createLootBag).forEach(list::add))
+                .appendItems(list -> {
+                    if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+                        getLoot().stream()
+                                .map(Loot::createLootBag)
+                                .forEach(list::add);
+                    }
+                })
                 .build();
 
     }

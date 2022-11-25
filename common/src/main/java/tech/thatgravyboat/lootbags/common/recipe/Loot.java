@@ -63,7 +63,9 @@ public record Loot(ResourceLocation id, String name, Color color, LootType type,
                 }
             }
         }
-        NetworkHandlers.CHANNEL.sendToPlayer(new ShowToastPacket(this, stacks), player);
+        if (!stacks.isEmpty()) {
+            NetworkHandlers.CHANNEL.sendToPlayer(new ShowToastPacket(this, stacks), player);
+        }
     }
 
     @Override
