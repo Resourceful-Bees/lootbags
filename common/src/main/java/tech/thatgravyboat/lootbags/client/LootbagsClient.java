@@ -1,5 +1,6 @@
 package tech.thatgravyboat.lootbags.client;
 
+import com.teamresourceful.resourcefullib.common.exceptions.NotImplementedException;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -9,7 +10,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 import tech.thatgravyboat.lootbags.Lootbags;
 import tech.thatgravyboat.lootbags.api.LootType;
@@ -31,7 +31,7 @@ public class LootbagsClient {
 
     @ExpectPlatform
     public static void registerProperty(Item item, ResourceLocation resourceLocation, ClampedItemPropertyFunction clampedItemPropertyFunction) {
-        throw new NotImplementedException("Not implemented yet");
+        throw new NotImplementedException();
     }
 
     public static void showLootToast(Loot recipe, List<ItemStack> rewards) {

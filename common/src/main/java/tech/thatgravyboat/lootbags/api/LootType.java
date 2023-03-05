@@ -1,6 +1,7 @@
 package tech.thatgravyboat.lootbags.api;
 
 import com.mojang.serialization.Codec;
+import com.teamresourceful.resourcefullib.common.codecs.EnumCodec;
 
 import java.util.Locale;
 import java.util.Map;
@@ -12,7 +13,7 @@ public enum LootType {
     EPIC(0.4f),
     LEGENDARY(0.5f);
 
-    public static final Codec<LootType> CODEC = Codec.STRING.xmap(LootType::valueOf, LootType::name);
+    public static final Codec<LootType> CODEC = EnumCodec.of(LootType.class);
     private static final Map<String, LootType> BY_NAME = Map.of(
         "common", COMMON,
         "uncommon", UNCOMMON,
