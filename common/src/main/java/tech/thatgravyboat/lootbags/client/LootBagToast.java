@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.teamresourceful.resourcefullib.client.utils.RenderUtils;
 import com.teamresourceful.resourcefullib.common.color.ConstantColors;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.world.item.ItemStack;
@@ -21,18 +22,19 @@ public class LootBagToast implements Toast {
          this.rewards = rewards;
      }
 
+    @NotNull
      public Visibility render(@NotNull PoseStack poseStack, ToastComponent toastComponent, long l) {
          RenderUtils.bindTexture(TEXTURE);
          ItemStack itemStack = rewards.get((int) (Math.min(rewards.size() - 1, l / 1000)));
-         toastComponent.blit(poseStack, 0, 0, 0, 0, this.width(), this.height());
+         GuiComponent.blit(poseStack, 0, 0, 0, 0, this.width(), this.height());
          Font font = toastComponent.getMinecraft().font;
          font.draw(poseStack, loot.name(), 30.0F, 7.0F, ConstantColors.lightgray.getValue());
          font.draw(poseStack, itemStack.getHoverName(), 30.0F, 18.0F, ConstantColors.lightgray.getValue());
-         toastComponent.getMinecraft().getItemRenderer().renderAndDecorateItem(itemStack, 8, 8);
+         toastComponent.getMinecraft().getItemRenderer().renderAndDecorateFakeItem(poseStack, itemStack, 8, 8);
          if(itemStack.getCount() > 1) {
              String string2 = String.valueOf(itemStack.getCount());
              poseStack.pushPose();
-             poseStack.translate(0.0D, 0.0D, toastComponent.getMinecraft().getItemRenderer().blitOffset + 200);
+             poseStack.translate(0.0D, 0.0D, 200);
              font.draw(poseStack, string2, (float) (9 + 19 - 2 - font.width(string2)), (float) (9 + 19 - font.lineHeight), 0xFF555555);
              font.draw(poseStack, string2, (float) (8 + 19 - 2 - font.width(string2)), (float) (8 + 19 - font.lineHeight), ConstantColors.white.getValue());
              poseStack.popPose();

@@ -36,7 +36,7 @@ public class LootbagsForge {
         event.registerCreativeModeTab(new ResourceLocation(Lootbags.MOD_ID, "itemgroup"), builder -> {
             builder.title(Component.translatable("itemGroup.lootbags.itemgroup"));
             builder.icon(() -> new ItemStack(McRegistry.LOOT_BAG.get()));
-            builder.displayItems((features, output, op) -> {
+            builder.displayItems((params, output) -> {
                 if (FMLLoader.getDist().isClient()) {
                     getLoot().stream()
                         .map(Loot::createLootBag)

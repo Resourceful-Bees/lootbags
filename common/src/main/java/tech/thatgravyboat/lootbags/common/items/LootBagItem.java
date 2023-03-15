@@ -18,6 +18,7 @@ public class LootBagItem extends Item {
         super(properties);
     }
 
+    @NotNull
     @Override
     public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
@@ -33,6 +34,7 @@ public class LootBagItem extends Item {
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
+    @NotNull
     @Override
     public Component getName(ItemStack stack) {
         return Component.translatable(stack.getOrCreateTag().getString("Name")).withStyle(Style.EMPTY.withColor(stack.getOrCreateTag().getInt("Color")));

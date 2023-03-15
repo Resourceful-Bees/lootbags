@@ -23,7 +23,7 @@ public class LootbagsFabric implements ModInitializer {
         FabricItemGroup.builder(new ResourceLocation(Lootbags.MOD_ID, "itemgroup"))
             .icon(() -> new ItemStack(McRegistry.LOOT_BAG.get()))
             .title(Component.translatable("itemGroup.lootbags.itemgroup"))
-            .displayItems((features, output, op) -> {
+            .displayItems((params, output) -> {
                 if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
                     getLoot().stream()
                         .map(Loot::createLootBag)
