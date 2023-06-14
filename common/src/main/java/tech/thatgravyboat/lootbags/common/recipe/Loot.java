@@ -49,11 +49,11 @@ public record Loot(ResourceLocation id, String name, Color color, LootType type,
     }
 
     public void openLootBag(Player player) {
-        player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 2.0F, 2.0F);
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.BUNDLE_DROP_CONTENTS, SoundSource.PLAYERS, 2.0F, 2.0F);
         List<ItemStack> stacks = output.retrieveLoot(player);
         for (ItemStack stack : stacks) {
             if (player.addItem(stack.copy())) {
-                player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((player.getRandom().nextFloat() - player.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
             } else {
                 ItemEntity itemEntity = player.drop(stack.copy(), false);
                 if (itemEntity != null) {

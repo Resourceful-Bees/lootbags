@@ -1,19 +1,19 @@
 package tech.thatgravyboat.lootbags.common.network.messages;
 
 import com.teamresourceful.resourcefullib.common.networking.base.Packet;
- import com.teamresourceful.resourcefullib.common.networking.base.PacketContext;
- import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
- import net.minecraft.client.Minecraft;
- import net.minecraft.network.FriendlyByteBuf;
- import net.minecraft.resources.ResourceLocation;
- import net.minecraft.world.item.ItemStack;
- import tech.thatgravyboat.lootbags.Lootbags;
- import tech.thatgravyboat.lootbags.client.LootbagsClient;
- import tech.thatgravyboat.lootbags.common.recipe.Loot;
- import tech.thatgravyboat.lootbags.common.registry.McRegistry;
+import com.teamresourceful.resourcefullib.common.networking.base.PacketContext;
+import com.teamresourceful.resourcefullib.common.networking.base.PacketHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import tech.thatgravyboat.lootbags.Lootbags;
+import tech.thatgravyboat.lootbags.client.LootBagToast;
+import tech.thatgravyboat.lootbags.common.recipe.Loot;
+import tech.thatgravyboat.lootbags.common.registry.McRegistry;
 
- import java.util.ArrayList;
- import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
  public record ShowToastPacket(Loot recipe, List<ItemStack> rewards) implements Packet<ShowToastPacket> {
      public static final ResourceLocation ID = new ResourceLocation(Lootbags.MOD_ID, "show_toast");
@@ -52,7 +52,7 @@ import com.teamresourceful.resourcefullib.common.networking.base.Packet;
 
          @Override
          public PacketContext handle(ShowToastPacket showToastPacket) {
-             return (player, level) -> LootbagsClient.showLootToast(showToastPacket.recipe, showToastPacket.rewards);
+             return (player, level) -> LootBagToast.show(showToastPacket.recipe, showToastPacket.rewards);
          }
      }
  }

@@ -18,11 +18,11 @@
       "tech.thatgravyboat.lootbags.fabric.LootbagsFabric"
     ],
     "client": [
-      "tech.thatgravyboat.lootbags.client.LootbagsClient::init"
+      "tech.thatgravyboat.lootbags.fabric.LootbagsFabricClient"
     ]
   },
   "depends": {
-    "fabricloader": ">=0.14.17",
-    "minecraft": ">=1.19.4"
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20"
   }
 }
