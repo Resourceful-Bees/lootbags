@@ -27,6 +27,7 @@ public record LootTableOutput(ResourceLocation table) implements LootOutput {
         if (player.level() instanceof ServerLevel serverLevel) {
             LootParams params = new LootParams.Builder(serverLevel)
                     .withOptionalParameter(LootContextParams.THIS_ENTITY, player)
+                    .withLuck(player.getLuck())
                     .withParameter(LootContextParams.ORIGIN, player.position())
                     .create(LootContextParamSets.CHEST);
             LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(table);
