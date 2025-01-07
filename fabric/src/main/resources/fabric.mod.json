@@ -19,6 +19,9 @@
     ],
     "client": [
       "tech.thatgravyboat.lootbags.fabric.LootbagsFabricClient"
+    ],
+    "jei_mod_plugin": [
+      "tech.thatgravyboat.lootbags.common.compat.jei.LootbagsJeiPlugin"
     ]
   },
   "depends": {
